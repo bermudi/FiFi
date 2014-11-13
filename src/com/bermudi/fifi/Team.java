@@ -15,7 +15,7 @@ import com.jaunt.*;
  */
 public class Team {
 
-    private static int teamqty = 0;
+    private static int teamQty = 0;
     
     private String name;
     private float rating;
@@ -49,25 +49,17 @@ public class Team {
         this.name = name;
         this.rating = rating;
         this.crest = getCrestWebLink(name);
-        this.id = teamqty++;
+        this.id = teamQty++;
         
     }
 
 }
 
-
-class Player {
-
-    private int id;
-    Team[] teams = new Team[2];
-}
-
-
 class TeamBuilder {
 
     public static void main(String[] args) {
 
-        int sel = 0;
+        int sel;
         Scanner input = new Scanner(System.in);
         System.out.println("Please select an item from the menu");
 
@@ -116,7 +108,7 @@ class TeamBuilder {
         } catch (JauntException e) {         //if an HTTP/connection error occurs, handle JauntException.
             System.err.println(e);
         }
-    createTeam();
+    
     }
 
 }
