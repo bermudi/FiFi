@@ -1,0 +1,21 @@
+Jaunt 0.9.9.3 Release Notes
+
+Jaunt Beta is a free Java API that makes web scraping & automation easier.
+
+Jaunt 0.9.9.3 public release date: October 27, 2014
+Jaunt 0.9.9.3 software expiry date: November 30, 2014
+
+Installation Instructions & Quickstart Tutorial
+http://jaunt-api.com/jaunt-tutorial.htm
+
+
+CHANGES FOR v.0.9.9.3
+
+- changes to the API listed below:
+
+removed class NodeNotFound (replace with NotFound)
+removed class HeaderListener
+removed from UserAgent:
+  addHeaderListener(HeaderListener)
+  removeHeaderListener(HeaderListener)
+
