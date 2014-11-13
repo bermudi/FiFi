@@ -44,6 +44,21 @@ public class Team {
         return crestLink;
     }
     
+    public String getName() {
+        return name;
+    }
+    
+    public float getRating() {
+        return rating;
+    }
+    
+    public int getID() {
+        return id;
+    }
+    
+    public String getCrest() {
+        return crest;
+    }
     
     public void Team(String name, float rating) {
         this.name = name;
