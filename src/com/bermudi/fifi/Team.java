@@ -1,13 +1,27 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Copyright (C) 2014 daniel
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 package com.bermudi.fifi;
 
-import java.util.Scanner;
 import com.jaunt.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.net.URL;
+import javax.imageio.ImageIO;
 
 /**
  *
@@ -16,114 +30,65 @@ import com.jaunt.*;
 public class Team {
 
     private static int teamQty = 0;
-    
-    private String name;
-    private float rating;
-    private String crest;
-    private int id;
 
-//    public void getInfo() {
-//
-//        System.out.println(name);
-//        System.out.println(rating);
-//        System.out.println(crest);
-//    }
-    
-    public String getCrestWebLink (String team) {
+    private final String name;
+    private final float rating;
+    private final String crest;
+    private final int id;
+
+    public String getCrestWebLink(String team) {
         String crestLink = "";
         team = team.replaceAll(" ", "%20");
-        
+
         try {
-            UserAgent userAgent = new UserAgent();                       
-            userAgent.visit("http://en.wikipedia.org/wiki/Special:Search?search="+team);
-            crestLink = userAgent.doc.findFirst("<table class=\"infobox vcard\">").findFirst("<img>").getAt("src");            
+            UserAgent userAgent = new UserAgent();
+            userAgent.visit("http://en.wikipedia.org/wiki/Special:Search?search=" + team);
+            crestLink = userAgent.doc.findFirst("<table class=\"infobox vcard\">").findFirst("<img>").getAt("src");
         } catch (JauntException e) {         //if an HTTP/connection error occurs, handle JauntException.
             System.err.println(e);
         }
-        
+
         return crestLink;
     }
-    
+
+    private String saveCrestFile(String link) throws IOException {
+        String filename;
+        String directory = "crests";
+        String ext = link.substring(link.length() - 3);
+        filename = id +"."+ ext;
+
+        BufferedImage image = null;
+
+        URL url = new URL(link);
+        image = ImageIO.read(url);
+        File outputfile = new File(directory+"/"+filename);
+        ImageIO.write(image, ext, outputfile);
+
+        return filename;
+    }
+
     public String getName() {
         return name;
     }
-    
+
     public float getRating() {
         return rating;
     }
-    
+
     public int getID() {
         return id;
     }
-    
+
     public String getCrest() {
         return crest;
     }
-    
-    public void Team(String name, float rating) {
+
+    public Team(String name, float rating) throws IOException {
         this.name = name;
         this.rating = rating;
-        this.crest = getCrestWebLink(name);
-        this.id = teamQty++;
-        
-    }
-
-}
-
-class TeamBuilder {
-
-    public static void main(String[] args) {
-
-        int sel;
-        Scanner input = new Scanner(System.in);
-        System.out.println("Please select an item from the menu");
-
-        while (true) {
-
-            System.out.println("1. Show Teams");
-            System.out.println("2. Add Team");
-            System.out.println("3. Delete Team");
-            System.out.println("9. Exit");
-
-            sel = input.nextInt();
-
-            switch (sel) {
-                case 1:
-                    
-                    break;
-                case 2:
-                    createTeam();
-                    break;
-                case 3:
-                    //
-                    break;
-                case 9:
-                    return;
-                default:
-                    System.out.println("Try again smart ass");
-                    System.out.println();
-            }
-        }
+        this.id = ++teamQty;
+        this.crest = saveCrestFile(getCrestWebLink(name));
 
     }
-
-    static public void createTeam() {
-        String team;
-        Scanner input = new Scanner(System.in);
-        team = input.nextLine();
-        team = team.replaceAll(" ", "%20");
-        System.out.println(team);
-        
-        try {
-            UserAgent userAgent = new UserAgent();                       //create new userAgent (headless browser).
-            userAgent.visit("http://en.wikipedia.org/wiki/Special:Search?search="+team); //visit a url              
-            //System.out.println(userAgent.doc.innerHTML());
-            String crestLink = userAgent.doc.findFirst("<table class=\"infobox vcard\">").findFirst("<img>").getAt("src");            
-            System.out.println("crest link: " + crestLink);
-        } catch (JauntException e) {         //if an HTTP/connection error occurs, handle JauntException.
-            System.err.println(e);
-        }
     
-    }
-
 }
