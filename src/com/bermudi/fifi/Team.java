@@ -15,9 +15,12 @@ import com.jaunt.*;
  */
 public class Team {
 
+    private static int teamqty = 0;
+    
     private String name;
     private float rating;
     private String crest;
+    private int id;
 
 //    public void getInfo() {
 //
@@ -46,6 +49,8 @@ public class Team {
         this.name = name;
         this.rating = rating;
         this.crest = getCrestWebLink(name);
+        this.id = teamqty++;
+        
     }
 
 }
