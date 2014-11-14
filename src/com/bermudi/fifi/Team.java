@@ -20,6 +20,7 @@ import com.jaunt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.io.Serializable;
 import java.net.URL;
 import javax.imageio.ImageIO;
 
@@ -27,14 +28,16 @@ import javax.imageio.ImageIO;
  *
  * @author daniel
  */
-public class Team {
+public class Team implements Serializable {
+
+    public static final String TEAM_LOC = "res/crests";
 
     private static int teamQty = 0;
 
-    private final String name;
-    private final float rating;
-    private final String crest;
-    private final int id;
+    private String name;
+    private float rating;
+    private String crest;
+    private int id;
 
     public String getCrestWebLink(String team) {
         String crestLink = "";
@@ -53,15 +56,13 @@ public class Team {
 
     private String saveCrestFile(String link) throws IOException {
         String filename;
-        String directory = "crests";
         String ext = link.substring(link.length() - 3);
-        filename = id +"."+ ext;
+        filename = id + "." + ext;
 
         BufferedImage image = null;
-
         URL url = new URL(link);
         image = ImageIO.read(url);
-        File outputfile = new File(directory+"/"+filename);
+        File outputfile = new File(TEAM_LOC + "/" + filename);
         ImageIO.write(image, ext, outputfile);
 
         return filename;
@@ -90,5 +91,12 @@ public class Team {
         this.crest = saveCrestFile(getCrestWebLink(name));
 
     }
-    
+
+    public Team() {
+        name = "";
+        rating = 0f;
+        crest = "";
+        id = ++teamQty;
+    }
+
 }
