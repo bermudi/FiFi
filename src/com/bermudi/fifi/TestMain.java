@@ -80,6 +80,29 @@ public class TestMain {
 //        team10 = TeamManager.loadTeam(team4);
 //        team11 = TeamManager.loadTeam(team5);
 //        team12 = TeamManager.loadTeam(team6);
+=======
+        
+        TeamManager.saveTeam(team1);
+        TeamManager.saveTeam(team2);
+        TeamManager.saveTeam(team3);
+        TeamManager.saveTeam(team4);
+        TeamManager.saveTeam(team5);
+        TeamManager.saveTeam(team6);
+        
+        Team team7 = new Team();
+        Team team8 = new Team();
+        Team team9 = new Team();
+        Team team10 = new Team();
+        Team team11 = new Team();
+        Team team12 = new Team();
+        
+        team7 = TeamManager.loadTeam(team1);
+        team8 = TeamManager.loadTeam(team2);
+        team9 = TeamManager.loadTeam(team3);
+        team10 = TeamManager.loadTeam(team4);
+        team11 = TeamManager.loadTeam(team5);
+        team12 = TeamManager.loadTeam(team6);
+>>>>>>> origin/master
         
     }
     
